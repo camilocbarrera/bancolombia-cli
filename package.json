@@ -1,6 +1,6 @@
 {
   "name": "bancolombia-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Manage your Bancolombia accounts via terminal, REST API, or MCP server for Claude",
   "author": "Cristian Correa",
   "license": "MIT",
