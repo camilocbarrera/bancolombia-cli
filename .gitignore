@@ -1,0 +1,8 @@
+node_modules/
+bun.lock
+
+# Session config (contains access tokens)
+.bancolombia-config.json
+
+# OS files
+.DS_Store
