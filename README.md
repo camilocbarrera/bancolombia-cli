@@ -10,10 +10,14 @@
 ## Install
 
 ```bash
-# Clone and install
+# From npm (requires Bun)
+bun add -g bancolombia-cli
+
+# Or clone and link
 git clone https://github.com/camilocbarrera/bancolombia-cli.git
 cd bancolombia-cli
 bun install
+bun link
 ```
 
 ## Login
