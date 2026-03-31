@@ -1,6 +1,6 @@
 import { loadConfig } from "../config";
 import { getAccounts } from "../services/account";
-import { formatCOP, formatAccountType } from "../formatters";
+import { formatCOP, formatAccountType, maskAccount } from "../formatters";
 import { printDetail, printTable, withSpinner, success, dim, warn, fail } from "../ui";
 
 const config = await loadConfig().catch((e: Error) => {
@@ -32,7 +32,7 @@ if (!isExpired) {
         head: ["Type", "Number", "Name", "Balance"],
         rows: accounts.map((a) => [
           formatAccountType(a.type),
-          a.number,
+          maskAccount(a.number),
           a.name,
           formatCOP(a.balance),
         ]),

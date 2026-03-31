@@ -1,7 +1,7 @@
 import { saveConfig } from "../config";
 import { connectViaApi } from "../services/auth";
 import { getAccounts } from "../services/account";
-import { formatCOP, formatAccountType } from "../formatters";
+import { formatCOP, formatAccountType, maskAccount } from "../formatters";
 import { PROXY_API_URL } from "../constants";
 import type { ApiConfig } from "../schemas/config";
 import { printDetail, printTable, withSpinner, ok, dim, hint, fail } from "../ui";
@@ -53,7 +53,7 @@ if (accounts?.length) {
     head: ["Type", "Number", "Name", "Balance"],
     rows: accounts.map((a) => [
       formatAccountType(a.type),
-      a.number,
+      maskAccount(a.number),
       a.name,
       formatCOP(a.balance),
     ]),

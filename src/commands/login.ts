@@ -1,6 +1,6 @@
 import { saveConfig } from "../config";
 import { getAccounts } from "../services/account";
-import { formatCOP, formatAccountType } from "../formatters";
+import { formatCOP, formatAccountType, maskAccount } from "../formatters";
 import { LOGIN_URL, SESSION_TTL_MS } from "../constants";
 import type { DirectConfig } from "../schemas/config";
 import { printDetail, printTable, withSpinner, ok, fail, bancoYellowBold, dim, bold, success, hint } from "../ui";
@@ -123,7 +123,7 @@ if (accounts?.length) {
     head: ["Type", "Number", "Name", "Balance"],
     rows: accounts.map((a) => [
       formatAccountType(a.type),
-      a.number,
+      maskAccount(a.number),
       a.name,
       formatCOP(a.balance),
     ]),
