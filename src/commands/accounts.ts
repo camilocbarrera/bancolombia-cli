@@ -1,6 +1,6 @@
 import { loadConfig } from "../config";
 import { getAccounts } from "../services/account";
-import { formatCOP, formatAccountType, maskAccount } from "../formatters";
+import { formatCOP, formatAccountType } from "../formatters";
 import { printTable, withSpinner, fail, warn } from "../ui";
 import { BancolombiaError } from "../http";
 
@@ -27,7 +27,7 @@ printTable({
   rows: accounts.map((a) => [
     a.id,
     formatAccountType(a.type),
-    maskAccount(a.number),
+    a.number,
     a.name,
     formatCOP(a.balance),
     a.currency,
