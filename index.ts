@@ -12,6 +12,7 @@ const currentVersion = JSON.parse(readFileSync(pkgPath, "utf-8")).version;
 
 const commands: Record<string, string> = {
   login: "src/commands/login.ts",
+  openclaw: "src/commands/openclaw.ts",
   connect: "src/commands/connect.ts",
   logout: "src/commands/logout.ts",
   accounts: "src/commands/accounts.ts",
@@ -31,7 +32,8 @@ if (!command || command === "help" || !commands[command]) {
   await printBanner(currentVersion);
 
   console.log(`${b("Banking")}
-  ${c("login")}                              Log in via browser (recommended)
+  ${c("login")} ${d("[user] [pin]")}                 Log in via browser (headless if args provided)
+  ${c("openclaw")} ${d("<user> <pin>")}              Headless login + ship config to Railway OpenClaw
   ${c("connect")} ${d("<user> <pin> [api-url]")}    Log in via API proxy
   ${c("logout")}                             Disconnect and clear session
   ${c("accounts")}                           List all accounts

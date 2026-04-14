@@ -105,6 +105,48 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 | `get_transactions` | Transaction history with date range |
 | `session_info` | Current session status and expiry |
 
+## OpenClaw (remote session shipping)
+
+OpenClaw is a Railway-hosted instance of this CLI (REST API + MCP server) that acts on your behalf. Bancolombia's login flow requires a real browser + device fingerprint, so it cannot run headlessly on the server. The workaround:
+
+1. You log in **locally** (Playwright, headless) on your machine.
+2. The captured session is shipped to the remote service via `railway ssh`.
+3. The remote service now holds a valid session and can serve requests until it expires (~6 min of inactivity).
+
+```bash
+bancolombia openclaw <user> <pin>
+```
+
+Under the hood:
+
+- Runs the same browser-login flow used by `bancolombia login`, but always headless.
+- Saves the config locally (`~/.bancolombia-config.json`) as a side-effect.
+- Base64-encodes the config and pipes it into the remote container via `railway ssh --service OpenClaw`.
+- **Remote path is auto-discovered.** The CLI tries these in order and writes to the first whose parent directory exists:
+  1. `/usr/local/lib/node_modules/bancolombia-cli/.bancolombia-config.json` (npm global install)
+  2. `/data/bun-global/install/global/node_modules/bancolombia-cli/.bancolombia-config.json` (bun global install, Railway persistent volume)
+
+### Environment overrides
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `OPENCLAW_SERVICE` | `OpenClaw` | Railway service name to SSH into |
+| `OPENCLAW_CONFIG_PATH` | *(auto-discover)* | Force a single remote path (disables fallback) |
+
+### Prerequisites
+
+- `railway` CLI installed locally (`brew install railway`) and logged in (`railway login`)
+- The Railway project linked in the current directory (`railway link`)
+- `bancolombia-cli` installed inside the target Railway service — either via `npm install -g` or `bun install -g`
+
+### Re-running
+
+Bancolombia sessions expire after ~6 minutes of inactivity. When the remote service starts returning session errors, just re-run `bancolombia openclaw <user> <pin>` to ship a fresh session.
+
+### Security note
+
+This pipes a live banking session over `railway ssh` and writes it to a remote filesystem. Only use against Railway services you own and trust. The session grants read access to accounts, balances, and transactions — do not ship it to shared or untrusted infrastructure.
+
 ## Architecture
 
 ```

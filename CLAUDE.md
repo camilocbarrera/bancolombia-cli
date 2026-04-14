@@ -44,7 +44,17 @@ bancolombia logout                         # Disconnect
 bancolombia health                         # Check proxy API status
 bancolombia server                         # Start REST API
 bancolombia mcp                            # Start MCP server
+bancolombia openclaw <user> <pin>          # Local headless login → ship session to Railway
 ```
+
+## OpenClaw (remote session shipping)
+
+`src/commands/openclaw.ts` logs in locally via headless Playwright, then ships the resulting config to a Railway service over `railway ssh`. This exists because Bancolombia's anti-bot checks require a real browser on a client device — so the server can't log in itself; it must receive a session captured elsewhere.
+
+- Remote path is auto-discovered across candidates in `DEFAULT_REMOTE_PATHS` (npm global first, bun global fallback). First one whose parent dir exists wins; chosen path echoed over stdout and reported back.
+- `OPENCLAW_SERVICE` env var overrides the service name (default `OpenClaw`).
+- `OPENCLAW_CONFIG_PATH` env var forces a single path (disables fallback).
+- Session lifetime on the remote side ≈ 6 min of inactivity; re-run the command to refresh.
 
 ## Conventions
 
