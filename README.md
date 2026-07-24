@@ -11,7 +11,7 @@
 
 ```bash
 # From npm (requires Bun)
-bun add -g bancolombia-cli
+bun add -g @crafter/bancolombia-cli
 
 # Or clone and link
 git clone https://github.com/camilocbarrera/bancolombia-cli.git
@@ -123,8 +123,9 @@ Under the hood:
 - Saves the config locally (`~/.bancolombia-config.json`) as a side-effect.
 - Base64-encodes the config and pipes it into the remote container via `railway ssh --service OpenClaw`.
 - **Remote path is auto-discovered.** The CLI tries these in order and writes to the first whose parent directory exists:
-  1. `/usr/local/lib/node_modules/bancolombia-cli/.bancolombia-config.json` (npm global install)
-  2. `/data/bun-global/install/global/node_modules/bancolombia-cli/.bancolombia-config.json` (bun global install, Railway persistent volume)
+  1. `/usr/local/lib/node_modules/@crafter/bancolombia-cli/.bancolombia-config.json` (npm global install)
+  2. `/data/bun-global/install/global/node_modules/@crafter/bancolombia-cli/.bancolombia-config.json` (bun global install, Railway persistent volume)
+  3. Legacy unscoped `bancolombia-cli` paths for both of the above, as fallback
 
 ### Environment overrides
 
@@ -137,7 +138,7 @@ Under the hood:
 
 - `railway` CLI installed locally (`brew install railway`) and logged in (`railway login`)
 - The Railway project linked in the current directory (`railway link`)
-- `bancolombia-cli` installed inside the target Railway service — either via `npm install -g` or `bun install -g`
+- `@crafter/bancolombia-cli` installed inside the target Railway service — either via `npm install -g` or `bun install -g`
 
 ### Re-running
 
