@@ -4,6 +4,9 @@ import { printDetail, withSpinner, ok, fail, bancoYellowBold, dim, bold, success
 
 const RAILWAY_SERVICE = process.env.OPENCLAW_SERVICE || "OpenClaw";
 const DEFAULT_REMOTE_PATHS = [
+  "/usr/local/lib/node_modules/@crafter/bancolombia-cli/.bancolombia-config.json",
+  "/data/bun-global/install/global/node_modules/@crafter/bancolombia-cli/.bancolombia-config.json",
+  // Legacy unscoped install locations, kept as fallback
   "/usr/local/lib/node_modules/bancolombia-cli/.bancolombia-config.json",
   "/data/bun-global/install/global/node_modules/bancolombia-cli/.bancolombia-config.json",
 ];
